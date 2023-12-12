@@ -1,0 +1,54 @@
+openapi: "3.0.0"
+info:
+  title: PoliceAPI
+  version: 1.0.0
+paths:
+  /getPoliceRecordFromNIC/:
+    get:
+      summary: Get the police records of the user with nic
+      description: Get the police records records from the police recordsAPI database of the user
+      parameters:
+        - in: query
+          name: nic
+          description: nic of the user in the record
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  nic:
+                    type: integer
+                  numberOfCrimes:
+                    type: integer
+                  severity:
+                    type: integer
+
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  description:
+                    type: string
+
+        "500":
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                type: string
+
+      deprecated: false
+      security: []
