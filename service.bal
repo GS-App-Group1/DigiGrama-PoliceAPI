@@ -16,7 +16,7 @@ configurable string collection = ?;
 
 # A service representing a network-accessible API
 # bound to port `9090`.
-service /police\-record on new http:Listener(9090) {
+service /policerecord on new http:Listener(9090) {
     final mongodb:Client databaseClient;
 
     public function init() returns error? {

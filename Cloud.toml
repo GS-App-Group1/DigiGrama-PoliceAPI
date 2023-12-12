@@ -20,8 +20,8 @@ memory=80
 
 [cloud.deployment.probes.liveness]
 port=9090
-path="/police-record/liveness"
+path="/policerecord/liveness"
 
 [cloud.deployment.probes.readiness]
 port=9090
-path="/police-record/readiness"
+path="/policerecord/readiness"
