@@ -1,54 +1,77 @@
-openapi: "3.0.0"
+openapi: 3.0.1
 info:
-  title: PoliceAPI
-  version: 1.0.0
+  title: Policerecord
+  version: 0.1.0
+servers:
+  - url: "{server}:{port}/policerecord"
+    variables:
+      server:
+        default: http://localhost
+      port:
+        default: "9090"
 paths:
-  /getPoliceRecordFromNIC/:
+  /getPoliceRecordFromNIC:
     get:
-      summary: Get the police records of the user with nic
-      description: Get the police records records from the police recordsAPI database of the user
+      summary: A resource for getting the PoliceRecord of a given nic
+      operationId: getGetpolicerecordfromnic
       parameters:
-        - in: query
-          name: nic
-          description: nic of the user in the record
+        - name: nic
+          in: query
+          description: NIC of the person
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: OK
+          description: Ok
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  _id:
-                    type: string
-                  nic:
-                    type: integer
-                  numberOfCrimes:
-                    type: integer
-                  severity:
-                    type: integer
-
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  description:
-                    type: string
-
         "500":
-          description: Internal Server Error
+          description: Internal server error
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-
-      deprecated: false
-      security: []
+                $ref: "#/components/schemas/ErrorPayload"
+  /liveness:
+    get:
+      operationId: getLiveness
+      responses:
+        "200":
+          description: Ok
+  /readiness:
+    get:
+      operationId: getReadiness
+      responses:
+        "200":
+          description: Ok
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+components:
+  schemas:
+    ErrorPayload:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: Reason phrase
+        path:
+          type: string
+          description: Request path
+        method:
+          type: string
+          description: Method type of the request
+        message:
+          type: string
+          description: Error message
+        timestamp:
+          type: string
+          description: Timestamp of the error
+        status:
+          type: integer
+          description: Relevant HTTP status code
