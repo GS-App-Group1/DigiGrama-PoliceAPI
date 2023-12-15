@@ -27,7 +27,7 @@ service /policerecord on new http:Listener(9090) {
     # + nic - NIC of the person
     # + return - PoliceRecord or error
     resource function get getPoliceRecordFromNIC(string nic) returns json|error {
-        stream<PoliceRecord, error?>|mongodb:Error PoliceRecordStream = check self.databaseClient->find(collection, database);
+        stream<PoliceRecord, error?>|mongodb:Error PoliceRecordStream = check self.databaseClient->find(collection, database, {nic: nic});
         PoliceRecord[]|error policeRecords = from PoliceRecord PoliceRecord in check PoliceRecordStream
             select PoliceRecord;
 
