@@ -75,3 +75,4 @@ components:
         status:
           type: integer
           description: Relevant HTTP status code
+          format: int32
